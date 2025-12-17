@@ -34,6 +34,9 @@ flagChineladaFederupa:
 posChineloFederupa:
 	var #1; Posição do chinelo da Federal
 
+	;   =================== Strings ====================
+	hud : string " VIDAS CAASO:           VIDAS FEDERUPA: "
+
 	; ============== Funções Auxiliares ==============
 
 	; --- Imprime string na tela: ---
@@ -145,6 +148,45 @@ PrintHud:
 	pop r1
 	pop r0
 	rts
+
+	; Printa os valores da HUD
+
+PrintValuesHud:
+	push r0
+	push r1
+	push r2
+	push r3
+	push r4
+
+	loadn r0, lifesCaaso
+	loadn r1, #48; Fator de correção para tabela ASCII
+	add   r0, r0, r1
+
+	loadn   r1, #1168; Posição da tela para o print
+	outchar r0, r1
+
+	; Print das vidas
+
+	load r1
+	;    ########## FALTA TERMINAR PrintValuesHud ##########
+
+	; Printa tela de Fim de jogo
+
+GameOverCaasoWin:
+	push r0
+	push r1
+	push r2
+	push r3
+	push r4
+
+	loadn r0, #0; Posição do começo da tela
+	loadn r1, #gameOverLinha0; Endereço da tela de Game Over
+	call  PrintScreen
+
+	load  r0, lifesFederupa
+	loadn r1, #582; Posição para printar as vidas do federupa
+
+	; Print da dez
 
 main:
 
