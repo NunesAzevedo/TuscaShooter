@@ -142,7 +142,7 @@ PrintHud:
 	push r1; Armazena endereço da sting da HUD
 
 	loadn r0, #1160
-	lodan r1, #hud
+	loadn r1, #hud
 	call  PrintStr
 
 	pop r1
