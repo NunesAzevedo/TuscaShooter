@@ -320,12 +320,112 @@ ChineladaFederupa:
 	; --- Verifica se o jogador do CAASO foi atingido ---
 
 IsCaasoHit:
-	;=== FALTA IMPLEMENTAR ===
+	push r0
+	push r1
+
+	; =====================================
+	; Compara
+	; -------------------------------------
+	; Posição do Chinelo do Federupa: Esquerda
+	; Posição do jogador do CAASO   : Esquerda
+	; =====================================
+
+	load r0, posChineloFederupa; Posição do chinelo do Federupa
+	load r1, posCaasoUp
+	cmp  r0, r1
+	ceq  DecLifeCaaso
+
+	; =====================================
+	; Compara
+	; -------------------------------------
+	; Posição do Chinelo do Federupa: Esquerda
+	; Posição do jogador do CAASO   : Direita
+	; =====================================
+
+	inc r1; Posição da direita do CAASO
+	cmp r0, r1
+	ceq DecLifeCaaso
+
+	; =====================================
+	; Compara
+	; -------------------------------------
+	; Posição do Chinelo do Federupa: Direita
+	; Posição do jogador do CAASO   : Direita
+	; =====================================
+
+	inc r0; Posição da direita do chinelo
+	cmp r0, r1
+	ceq DecLifeCaaso
+
+	; =====================================
+	; Compara
+	; -------------------------------------
+	; Posição do Chinelo do Federupa: Direita
+	; Posição do jogador do CAASO   : Esquerda
+	; =====================================
+
+	dec r1; Posição esquerda do CAASO
+	cmp r0, r1
+	ceq DecLifeCaaso
+
+	pop r1
+	pop r0
+	rts
 
 	; --- Verifica se o jogador da Federal foi atingido ---
 
 IsFederupaHit:
-	;=== FALTA IMPLEMENTAR ===
+	push r0
+	push r1
+
+	; =====================================
+	; Compara
+	; -------------------------------------
+	; Posição do Chinelo do CAASO: Esquerda
+	; Posição do Federupa        : Esquerda
+	; =====================================
+
+	load r0, posChineloCaaso; Posição do chinelo do CAASO
+	load r1, posFederupaUp
+	cmp  r0, r1
+	ceq  DecLifeFederupa
+
+	; =====================================
+	; Compara
+	; -------------------------------------
+	; Posição do Chinelo do CAASO: Esquerda
+	; Posição do Federupa        : Direita
+	; =====================================
+
+	inc r1; Posição da direita do federupa
+	cmp r0, r1
+	ceq DecLifeFederupa
+
+	; =====================================
+	; Compara
+	; -------------------------------------
+	; Posição do Chinelo do CAASO: Direita
+	; Posição do Federupa        : Direita
+	; =====================================
+
+	inc r0; Posição da direita do chinelo
+	cmp r0, r1
+	ceq DecLifeFederupa
+
+	; =====================================
+	; Compara
+	; -------------------------------------
+	; Posição do Chinelo do CAASO: Direita
+	; Posição do Federupa        : Esquerda
+	; =====================================
+
+	dec r1; Posição esquerda do Federupa
+	cmp r0, r1
+	ceq DecLifeFederupa
+
+	pop r1
+	pop r0
+	rts
 
 	; --- Verifica se o jogador do CAASO tem vidas restantes ---
 
@@ -354,6 +454,16 @@ IsFederupaAlive:
 	pop r1
 	pop r0
 	rts
+
+	; --- Quando Federupa acerta o chinelo no jogador do CAASO ---
+
+DecLifeCaaso:
+	;=== FALTA IMPLEMENTAR ===
+
+	; --- Quando jogador do CAASO acerta o chinelo no Federupa ---
+
+DecLifeFederupa:
+	;=== FALTA IMPLEMENTAR ===
 
 Main:
 	call CleanScreen
