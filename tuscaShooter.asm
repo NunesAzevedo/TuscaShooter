@@ -1,6 +1,6 @@
 	call StartGameScreen
 	call Tuturial
-	jmp  main
+	jmp  Main
 
 	; ================== Variáveis ===================
 
@@ -10,17 +10,17 @@ lifesCaaso:
 lifesFederupa:
 	var #1; Vidas do jogador da Federal
 
-posCaasoLeft:
-	var #1; Coordenada do jogador do CAASO (Parte da Esquerda)
+posCaasoUp:
+	var #1; Coordenada do jogador do CAASO (Parte de Cima)
 
-posCaasoRight:
-	var #1; Coordenada do jogador do CAASO (Parte da Direita)
+posCaasoDown:
+	var #1; Coordenada do jogador do CAASO (Parte de Baixo)
 
-posFederupaLeft:
-	var #1; Coordenadas do jogador da Federal (Parte da Esquerda)
+posFederupaUp:
+	var #1; Coordenadas do jogador da Federal (Parte de Cima)
 
-posFederupaRight:
-	var #1; Coordenadas do jogador da Federal (Parte da Direita)
+posFederupaDown:
+	var #1; Coordenadas do jogador da Federal (Parte de Baixo)
 
 flagChineladaCaaso:
 	var #1; Flag se o CAASO tomou chinelada
@@ -297,9 +297,158 @@ EndGameScreen:
 	call  PrintScreen
 	halt
 
-main:
+	; --- Responsável pela movimentação do jogador do CAASO ---
 
-	halt
+MovimentacaoCaaso:
+	;=== FALTA IMPLEMENTAR ===
+
+	; --- Responsável pela movimentação do jogador da Federal ---
+
+MovimentacaoFederupa:
+	;=== FALTA IMPLEMENTAR ===
+
+	; --- Responsável pela Chinelada do jogador do CAASO ---
+
+ChineladaCaaso:
+	;=== FALTA IMPLEMENTAR ===
+
+	; --- Responsável pela Chinelada do jogador da Federal ---
+
+ChineladaFederupa:
+	;=== FALTA IMPLEMENTAR ===
+
+	; --- Verifica se o jogador do CAASO foi atingido ---
+
+IsCaasoHit:
+	;=== FALTA IMPLEMENTAR ===
+
+	; --- Verifica se o jogador do CAASO tem vidas restantes ---
+
+IsCaasoAlive:
+	push  r0
+	push  r1
+	loadn r0, #0
+	load  r1, lifesCaaso
+	cmp   r0, r1
+	jeq   GameOverFederalWin
+
+	pop r1
+	pop r0
+	rts
+
+	; --- Verifica se o jogador da Federal tem vidas restantes ---
+
+IsFederupaAlive:
+	push  r0
+	push  r1
+	loadn r0, #0
+	load  r1, lifesFederupa
+	cmp   r0, r1
+	jeq   GameOverCaasoWin
+
+	pop r1
+	pop r0
+	rts
+
+Main:
+	call CleanScreen
+
+	;     Salva quantidades de vidas
+	;     dos jogadores
+	loadn r0, #10
+	store lifesCaaso, r0
+	store lifesFederupa, r0
+
+	;     Posição do CAASO
+	loadn r0, #1059
+	store posCaasoUp, r0
+	loadn r0, #1099
+	store posCaasoDown, r0
+
+	;     Posição do Federupa
+	loadn r0, #19
+	store posFederupaUp, r0
+	loadn r0, #59
+	store posFederupaDown, r0
+
+	;     Zera a flag de chineladas do CAASO
+	loadn r0, #0
+	store flagChineladaCaaso, r0
+
+	;     Zera a flag de chineladas do Federupa
+	loadn r0, #0
+	store flagChineladaFederupa, r0
+
+	call PrintHud
+
+	; ===================================================================
+	; |                Funcionamento dos estados de jogo                |
+	; |-----------------------------------------------------------------|
+	; |O jogo acontecerá por meio de estados de jogo, em que cada estado|
+	; |acontecerá quando um contador de estados do jogo for um múltiplo |
+	; |de um determinado número específico de cada estado.              |
+	; |                                                                 |
+	; |Exemplo:                                                         |
+	; |A movimentação do jogador do CAASO tem como númedo de estado 2   |
+	; |então toda vez que o contador de estados assumir um              |
+	; |valor múltiplo de 2 (2, 4, 8 ...), o jogo executará              |
+	; |o estado de jogo da movimentação do jogador do CAASO             |
+	; ===================================================================
+
+	loadn r0, #0; Contador de estados de jogo iniciado em 0
+	loadn r2, #0; Salva valor 0 para futuras operações
+	jmp   Main_loop
+
+Main_loop:
+	;     ======================
+	;     Movimentação do CAASO
+	;     Num de estado: 10
+	;     ======================
+	loadn r1, #10
+	mod   r1, r0, r1
+	cmp   r1, r2
+	ceq   MovimentacaoCaaso
+
+	;     ======================
+	;     Chinelada do CAASO
+	;     Num de estado: 2
+	;     ======================
+	loadn r1, #2
+	mod   r1, r0, r1
+	cmp   r1, r2
+	ceq   ChineladaCaaso
+
+	;     ======================
+	;     Movimentação do Federupa
+	;     Num de estado: 30
+	;     ======================
+	loadn r1, #30
+	mod   r1, r0, r1
+	cmp   r1, r2
+	ceq   MovimentacaoFederupa
+
+	;     ======================
+	;     Chinelada do Federupa
+	;     Num de estado: 3
+	;     ======================
+	loadn r1, #3
+	mod   r1, r0, r1
+	cmp   r1, r2
+	ceq   ChineladaFederupa
+
+	;    Verifica se o CAASO tomou uma chinelada
+	call IsCaasoHit
+
+	;    Mostra vidas dos jogadores
+	call PrintValuesHud
+
+	;    Verifica se os jogadores tem vidas restantes
+	call IsCaasoAlive
+	call IsFederupaAlive
+
+	call Delay; Controla o fps do jogo
+	inc  r0; Incrementa o contador de estados do jogo
+	jmp  Main_loop
 
 	;                      ================== Cenários ==================
 	;                      Game Over CAASO Win
