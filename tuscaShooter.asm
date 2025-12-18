@@ -458,12 +458,42 @@ IsFederupaAlive:
 	; --- Quando Federupa acerta o chinelo no jogador do CAASO ---
 
 DecLifeCaaso:
-	;=== FALTA IMPLEMENTAR ===
+	push r0
+
+	; Decrementa vidas do CAASO
+
+	load  r0, lifesCaaso
+	dec   r0
+	store lifesCaaso, r0
+
+	; Incrementa a vida do Federupa
+
+	load  r0, lifesFederupa
+	inc   r0
+	store lifesFederupa, r0
+
+	pop r0
+	rts
 
 	; --- Quando jogador do CAASO acerta o chinelo no Federupa ---
 
 DecLifeFederupa:
-	;=== FALTA IMPLEMENTAR ===
+	push r0
+
+	; Decrementa a vida do Federupa
+
+	load  r0, lifesFederupa
+	dec   r0
+	store lifesFederupa, r0
+
+	; Incrementa a vida do CAASO
+
+	load  r0, lifesCaaso
+	inc   r0
+	store lifesCaaso, r0
+
+	pop r0
+	rts
 
 Main:
 	call CleanScreen
