@@ -353,6 +353,10 @@ IsFederupaAlive:
 Main:
 	call CleanScreen
 
+	; ===================================
+	; Setup inicial das variáveis do jogo
+	; ===================================
+
 	;     Salva quantidades de vidas
 	;     dos jogadores
 	loadn r0, #10
