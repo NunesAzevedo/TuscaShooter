@@ -567,7 +567,7 @@ ChineladaCaasoDraw:
 
 	dec   r1; Desloca posição do chinelo para a esquerda novamente
 	loadn r6, #40
-	add   r1, r1, r6; Desloca para baixo o chinelo
+	add   r1, r1, r6; Desloca para cima o chinelo
 
 	outchar r4, r1
 
@@ -792,15 +792,148 @@ FederupaAtirouOChinelo:
 	pop r0
 	rts
 
-	; --- Responsável pela Chinelada do jogador do CAASO ---
-
-ChineladaCaaso:
-	;=== FALTA IMPLEMENTAR ===
-
 	; --- Responsável pela Chinelada do jogador da Federal ---
 
 ChineladaFederupa:
-	;=== FALTA IMPLEMENTAR ===
+	; Enquanto a flag de chinelada
+	; estiver ativa, o chinelo
+	; continua voando
+
+	push r0
+	push r1
+
+	loadn r0, #1
+	load  r1, flagChineladaFederupa
+	cmp   r0, r1
+	ceq   ChineladaFederupaMove
+
+	pop r1
+	pop r0
+	rts
+
+ChineladaFederupaMove:
+	push r0
+	push r1
+	push r2
+
+	load  r0, posChineloFederupa
+	call  EraseFederupaChinelo
+	loadn r2, #40; Move a posição do chinelo uma linha acima
+	add   r0, r0, r2
+
+	; Verifica se ele atingiu a borda da tela
+
+	loadn r1, #1040
+	cmp   r0, r1
+	cle   ChineladaFederupaPassouUltimaLinha
+
+	store posChineloFederupa, r0
+	call  ChineladaFederupaDraw
+
+	pop r2
+	pop r1
+	pop r0
+	rts
+
+ChineladaFederupaPassouUltimaLinha:
+	; Apaga o chinelo quando ele
+	; passa da borda da tela
+
+	push r0
+	push r1
+	push r2
+
+	; Coloca flagChineladaCaaso como 0
+
+	loadn r0, #0
+	store flagChineladaFederupa, r0
+
+	loadn r1, #' '
+	load  r2, posChineloFederupa
+
+	outchar r1, r2
+	inc     r2
+	outchar r1, r2
+
+	pop r2
+	pop r1
+	pop r0
+	rts
+
+ChineladaFederupaDraw:
+	push r1
+	push r2
+	push r3
+	push r4
+	push r5
+	push r6
+
+	load  r1, flagChineladaFederupa
+	loadn r2, #0
+	cmp   r1, r2
+	jeq   ChineladaFederupaDraw_Skip
+
+	load  r1, posChineloFederupa
+	loadn r2, #'W'
+	loadn r3, #'X'
+	loadn r4, #'w'
+	loadn r5, #'x'
+
+	outchar r2, r1
+
+	inc     r1; Desloca a posição do tiro para a direita
+	outchar r3, r1
+
+	dec   r1; Desloca posição do chinelo para a esquerda novamente
+	loadn r6, #40
+	sub   r1, r1, r6; Desloca para baixo o chinelo
+
+	outchar r4, r1
+
+	inc     r1
+	outchar r5, r1
+
+ChineladaFederupaDraw_Skip:
+	pop r6
+	pop r5
+	pop r4
+	pop r3
+	pop r2
+	pop r1
+	rts
+
+EraseFederupaChinelo:
+	push r0
+	push r1
+	push r2
+	push r3
+
+	loadn r0, #' '
+	load  r1, posChineloFederupa
+
+	; Verifica se a posição atual
+	; do chinelo é a mesma do jogador
+	; e se for, pula a função
+
+	load  r2 posFederupaUp
+	loadn r3, #1040
+	cmp   r1, r2
+	jeq   EraseFederupaChinelo_Skip
+
+	; Desenha Espaço vazio na
+	; posição do chinelo
+
+	add     r1, r1, r3
+	outchar r0, r1
+	inc     r1
+	outchar r0, r1
+
+EraseFederupaChinelo_Skip:
+	pop r3
+	pop r2
+	pop r1
+	pop r0
+	rts
 
 	; --- Verifica se o jogador do CAASO foi atingido ---
 
