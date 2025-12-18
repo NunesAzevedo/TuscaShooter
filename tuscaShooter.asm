@@ -363,13 +363,13 @@ Main:
 	store lifesCaaso, r0
 	store lifesFederupa, r0
 
-	;     Posição do CAASO
+	;     Posição inicial do jogador do CAASO
 	loadn r0, #1059
 	store posCaasoUp, r0
 	loadn r0, #1099
 	store posCaasoDown, r0
 
-	;     Posição do Federupa
+	;     Posição inicial do jogador da Federal
 	loadn r0, #19
 	store posFederupaUp, r0
 	loadn r0, #59
