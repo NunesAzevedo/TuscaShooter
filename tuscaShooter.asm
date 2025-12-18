@@ -171,7 +171,7 @@ PrintValuesHud:
 	push r3
 	push r4
 
-	loadn r0, lifesCaaso
+	loadn r0, #lifesCaaso
 	loadn r1, #48; Fator de correção para tabela ASCII
 	add   r0, r0, r1
 
@@ -180,7 +180,7 @@ PrintValuesHud:
 
 	; Print das vidas
 
-	load r1
+	;load r1
 	;    ########## FALTA TERMINAR PrintValuesHud ##########
 
 	; Printa tela de Fim de jogo
@@ -241,7 +241,7 @@ StartGameScreen:
 	push r1
 	push r2
 
-	loadn, #screenStartGameLinha0; Primeiro endereço da tela
+	loadn r1, #screenStartGameLinha0; Primeiro endereço da tela
 	loadn  r2, #0; Cor Branca
 	call   PrintScreen
 
@@ -355,6 +355,14 @@ EraseCaaso:
 	pop r1
 	pop r0
 	rts
+
+; ======== MOVIMENTACAO CAASO ===========
+
+MovimentacaoCaaso:
+	jmp MoveCaaso
+
+MovimentacaoFederupa:
+	jmp MoveFederupa
 
 MoveCaaso:
 	; Movimentação do jogador do Caaso
@@ -596,7 +604,7 @@ EraseCaasoChinelo:
 	; do chinelo é a mesma do jogador
 	; e se for, pula a função
 
-	load  r2 posCaasoUp
+	load  r2, posCaasoUp
 	loadn r3, #40
 	cmp   r1, r2
 	jeq   EraseCaasoChinelo_Skip
@@ -915,7 +923,7 @@ EraseFederupaChinelo:
 	; do chinelo é a mesma do jogador
 	; e se for, pula a função
 
-	load  r2 posFederupaUp
+	load  r2, posFederupaUp
 	loadn r3, #1040
 	cmp   r1, r2
 	jeq   EraseFederupaChinelo_Skip
@@ -1114,6 +1122,10 @@ DecLifeFederupa:
 	rts
 
 Main:
+	push r0
+	push r1
+	push r2
+	
 	call CleanScreen
 
 	; ===================================
@@ -1164,7 +1176,6 @@ Main:
 
 	loadn r0, #0; Contador de estados de jogo iniciado em 0
 	loadn r2, #0; Salva valor 0 para futuras operações
-	jmp   Main_loop
 
 Main_loop:
 	;     ======================
@@ -1180,6 +1191,7 @@ Main_loop:
 	;     Chinelada do CAASO
 	;     Num de estado: 2
 	;     ======================
+	
 	loadn r1, #2
 	mod   r1, r0, r1
 	cmp   r1, r2
@@ -1216,20 +1228,85 @@ Main_loop:
 
 	call Delay; Controla o fps do jogo
 	inc  r0; Incrementa o contador de estados do jogo
+	
+	pop r2
+	pop r1
+	pop r0
+	
 	jmp  Main_loop
 
-	;                      ================== Cenários ==================
-	;                      Game Over CAASO Win
-	gameOverCaasoWinLinha0 : string ""
+;     ================== Cenários ==================
 
-	;                        Game Over Federal Win
-	gameOverFederalWinLinha0 : string ""
+;                      Game Over CAASO Win
+gameOverCaasoWinLinha0  : string "                                        "
+gameOverCaasoWinLinha1  : string "                                        "
+gameOverCaasoWinLinha2  : string "                                        "
+gameOverCaasoWinLinha3  : string "                                        "
+gameOverCaasoWinLinha4  : string "                                        "
+gameOverCaasoWinLinha5  : string "                                        "
+gameOverCaasoWinLinha6  : string "                                        "
+gameOverCaasoWinLinha7  : string "                                        "
+gameOverCaasoWinLinha8  : string "                                        "
+gameOverCaasoWinLinha9  : string "                                        "
+gameOverCaasoWinLinha10 : string "                                        "
+gameOverCaasoWinLinha11 : string "                                        "
+gameOverCaasoWinLinha12 : string "                                        "
+gameOverCaasoWinLinha13 : string "                                        "
+gameOverCaasoWinLinha14 : string "                                        "
+gameOverCaasoWinLinha15 : string "                                        "
+gameOverCaasoWinLinha16 : string "                                        "
+gameOverCaasoWinLinha17 : string "                                        "
+gameOverCaasoWinLinha18 : string "                                        "
+gameOverCaasoWinLinha19 : string "                                        "
+gameOverCaasoWinLinha20  : string "                                        "
+gameOverCaasoWinLinha21  : string "                                        "
+gameOverCaasoWinLinha22  : string "                                        "
+gameOverCaasoWinLinha23  : string "                                        "
+gameOverCaasoWinLinha24  : string "                                        "
+gameOverCaasoWinLinha25  : string "                                        "
+gameOverCaasoWinLinha26  : string "                                        "
+gameOverCaasoWinLinha27  : string "                                        "
+gameOverCaasoWinLinha28  : string "                                        "
+gameOverCaasoWinLinha29  : string "                                        "
 
-	;                     Tela inicial do jogo
-	screenStartGameLinha0 : string ""
+;                      Game Over Federal Win
+gameOverFederalWinLinha0 : string ""
 
-	;                    Tela do tuturial do jogo
-	screenTuturialLinha0 : string ""
+;                     Tela inicial do jogo
+screenStartGameLinha0  : string "                                        "
+screenStartGameLinha1  : string "                                        "
+screenStartGameLinha2  : string "                                        "
+screenStartGameLinha3  : string "                                        "
+screenStartGameLinha4  : string "                                        "
+screenStartGameLinha5  : string "               (tela inicial)           "
+screenStartGameLinha6  : string "                                        "
+screenStartGameLinha7  : string "                                        "
+screenStartGameLinha8  : string "                                        "
+screenStartGameLinha9  : string "                                        "
+screenStartGameLinha10 : string "                                        "
+screenStartGameLinha11 : string "                                        "
+screenStartGameLinha12 : string "                                        "
+screenStartGameLinha13 : string "                                        "
+screenStartGameLinha14 : string "                                        "
+screenStartGameLinha15 : string "                                        "
+screenStartGameLinha16 : string "                                        "
+screenStartGameLinha17 : string "                                        "
+screenStartGameLinha18 : string "                                        "
+screenStartGameLinha19 : string "                                        "
+screenStartGameLinha20 : string "                                        "	
+screenStartGameLinha21 : string "                                        "
+screenStartGameLinha22 : string "                                        "
+screenStartGameLinha23 : string "                                        "
+screenStartGameLinha24 : string "                                        "
+screenStartGameLinha25 : string "                                        "
+screenStartGameLinha26 : string "                                        "
+screenStartGameLinha27 : string "                                        "
+screenStartGameLinha28 : string "                                        "
+screenStartGameLinha29 : string "                                        "
 
-	;                   Tela final do jogo
-	endGameScreenLinha0 : string ""
+
+;                    Tela do tuturial do jogo
+screenTuturialLinha0 : string ""
+
+;                   Tela final do jogo
+endGameScreenLinha0 : string ""
