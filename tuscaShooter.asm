@@ -460,7 +460,161 @@ MoveCaasoRight_Skip:
 	rts
 
 CaasoAtirouOChinelo:
-	;=== FALTA IMPLEMENTAR ===
+	; Ativa a flag de tiro e
+	; coloca a posição de origem
+	; do tiro sendo a de jogador
+	; no momento em que foi disparado
+
+	push r0
+
+	loadn r0, #1
+	store flagChineladaCaaso, r0
+	load  r0, posCaasoUp
+	store posChineloCaaso, r0
+
+	pop r0
+	rts
+
+ChineladaCaaso:
+	; Enquanto a flag de chinelada
+	; estiver ativa, o chinelo
+	; continua voando
+
+	push r0
+	push r1
+
+	loadn r0, #1
+	load  r1, flagChineladaCaaso
+	cmp   r0, r1
+	ceq   ChineladaCaasoMove
+
+	pop r1
+	pop r0
+	rts
+
+ChineladaCaasoMove:
+	push r0
+	push r1
+	push r2
+
+	load  r0, posChineloCaaso
+	call  EraseCaasoChinelo
+	loadn r2, #40; Move a posição do chinelo uma linha acima
+	sub   r0, r0, r2
+
+	; Verifica se ele atingiu a borda da tela
+
+	loadn r1, #40
+	cmp   r0, r1
+	cle   ChineladaCaasoPassouPrimeiraLinha
+
+	store posChineloCaaso, r0
+	call  ChineladaCaasoDraw
+
+	pop r2
+	pop r1
+	pop r0
+	rts
+
+ChineladaCaasoPassouPrimeiraLinha:
+	; Apaga o chinelo quando ele
+	; passa da borda da tela
+
+	push r0
+	push r1
+	push r2
+
+	; Coloca flagChineladaCaaso como 0
+
+	loadn r0, #0
+	store flagChineladaCaaso, r0
+
+	loadn r1, #' '
+	load  r2, posChineloCaaso
+
+	outchar r1, r2
+	inc     r2
+	outchar r1, r2
+
+	pop r2
+	pop r1
+	pop r0
+	rts
+
+ChineladaCaasoDraw:
+	push r1
+	push r2
+	push r3
+	push r4
+	push r5
+	push r6
+
+	load  r1, flagChineladaCaaso
+	loadn r2, #0
+	cmp   r1, r2
+	jeq   ChineladaCaasoDraw_Skip
+
+	load  r1, posChineloCaaso
+	loadn r2, #'W'
+	loadn r3, #'X'
+	loadn r4, #'w'
+	loadn r5, #'x'
+
+	outchar r2, r1
+
+	inc     r1; Desloca a posição do tiro para a direita
+	outchar r3, r1
+
+	dec   r1; Desloca posição do chinelo para a esquerda novamente
+	loadn r6, #40
+	add   r1, r1, r6; Desloca para baixo o chinelo
+
+	outchar r4, r1
+
+	inc     r1
+	outchar r5, r1
+
+ChineladaCaasoDraw_Skip:
+	pop r6
+	pop r5
+	pop r4
+	pop r3
+	pop r2
+	pop r1
+	rts
+
+EraseCaasoChinelo:
+	push r0
+	push r1
+	push r2
+	push r3
+
+	loadn r0, #' '
+	load  r1, posChineloCaaso
+
+	; Verifica se a posição atual
+	; do chinelo é a mesma do jogador
+	; e se for, pula a função
+
+	load  r2 posCaasoUp
+	loadn r3, #40
+	cmp   r1, r2
+	jeq   EraseCaasoChinelo_Skip
+
+	; Desenha Espaço vazio na
+	; posição do chinelo
+
+	add     r1, r1, r3
+	outchar r0, r1
+	inc     r1
+	outchar r0, r1
+
+EraseCaasoChinelo_Skip:
+	pop r3
+	pop r2
+	pop r1
+	pop r0
+	rts
 
 	; --- Responsável pela movimentação do jogador da Federal ---
 
@@ -623,7 +777,20 @@ MoveFederupaRight_Skip:
 	rts
 
 FederupaAtirouOChinelo:
-	;=== FALTA IMPLEMENTAR ===
+	; Ativa a flag de tiro e
+	; coloca a posição de origem
+	; do tiro sendo a de jogador
+	; no momento em que foi disparado
+
+	push r0
+
+	loadn r0, #1
+	store flagChineladaFederupa, r0
+	load  r0, posFederupaUp
+	store posChineloFederupa, r0
+
+	pop r0
+	rts
 
 	; --- Responsável pela Chinelada do jogador do CAASO ---
 
