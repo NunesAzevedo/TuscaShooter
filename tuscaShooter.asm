@@ -241,7 +241,7 @@ StartGameScreen:
 	push r1
 	push r2
 
-	loadn, #screenMenuLinha0; Primeiro endereço da tela
+	loadn, #screenStartGameLinha0; Primeiro endereço da tela
 	loadn  r2, #0; Cor Branca
 	call   PrintScreen
 
@@ -320,6 +320,11 @@ ChineladaFederupa:
 	; --- Verifica se o jogador do CAASO foi atingido ---
 
 IsCaasoHit:
+	;=== FALTA IMPLEMENTAR ===
+
+	; --- Verifica se o jogador da Federal foi atingido ---
+
+IsFederupaHit:
 	;=== FALTA IMPLEMENTAR ===
 
 	; --- Verifica se o jogador do CAASO tem vidas restantes ---
@@ -440,8 +445,9 @@ Main_loop:
 	cmp   r1, r2
 	ceq   ChineladaFederupa
 
-	;    Verifica se o CAASO tomou uma chinelada
+	;    Verifica se alguém tomou uma chinelada
 	call IsCaasoHit
+	call IsFederupaHit
 
 	;    Mostra vidas dos jogadores
 	call PrintValuesHud
@@ -456,12 +462,16 @@ Main_loop:
 
 	;                      ================== Cenários ==================
 	;                      Game Over CAASO Win
-	gameOverCaasoWinLinha0 : sting ""
+	gameOverCaasoWinLinha0 : string ""
 
 	;                        Game Over Federal Win
-	gameOverFederalWinLinha0 : sting ""
+	gameOverFederalWinLinha0 : string ""
 
-	screenMenuLinha0 : string ""
+	;                     Tela inicial do jogo
+	screenStartGameLinha0 : string ""
 
+	;                    Tela do tuturial do jogo
 	screenTuturialLinha0 : string ""
-	endGameScreenLinha0  : string ""
+
+	;                   Tela final do jogo
+	endGameScreenLinha0 : string ""
