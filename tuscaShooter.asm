@@ -1,6 +1,6 @@
-;call StartGameScreen
-
-	jmp main
+	call StartGameScreen
+	call Tuturial
+	jmp  main
 
 	; ================== Variáveis ===================
 
@@ -122,16 +122,29 @@ CleanScreen_loop:
 	rts
 
 	; --- Causa Delay no jogo para controlar o fps ---
+	; Passa por vários ciclos fazendo nada
+	; afim de esperar o tempo de 1 segundo passar
+	; no clock de 1 MHz em 2 loops de 1000 ciclos cada
+	; fazendo gastar tempo de forma que:
+	; (1000) * (1000) = 1 seg (Clock: 1 MHz)
 
 Delay:
+
 	push r0; Armazena quantidade de clocks ignorados
+	push r1
 
-	loadn r0, #1000000; 1 segundo em clock de 1 MHz
+	loadn r0, #1000
 
-Delay_loop:
+Delay_loop1:
+	loadn r1, #1000
+
+Delay_loop2:
+	dec r1
+	jnz Delay_loop2
 	dec r0
-	jnz Delay_loop
+	jnz Delay_loop1
 
+	pop r1
 	pop r0
 	rts
 
@@ -225,7 +238,56 @@ GameOverFederalWin_ScanChar:
 	; ----- Tela de Início do Jogo -----
 
 StartGameScreen:
-	; === FALTA IMPLEMENTAR ===
+	push r1
+	push r2
+
+	loadn, #screenMenuLinha0; Primeiro endereço da tela
+	loadn  r2, #0; Cor Branca
+	call   PrintScreen
+
+	;     -- Lê tecla do usuário para iniciar o jogo --
+	;     Fica verificando em loop a entrada do usuário
+	;     e enquanto não for precionado 'ENTER' o
+	;     jogo não inicia, e quando for precionado
+	;     limpa a tela e continua o programa
+	loadn r2, #13
+
+StartGameScreen_ScanChar:
+	inchar r1
+	cmp    r1, r2
+	jne    StartGameScreen_ScanChar
+	call   CleanScreen
+
+	pop r2
+	pop r1
+	rts
+
+	; ----- Tela com instruções de como jogar o jogo -----
+
+Tuturial:
+	call CleanScreen
+	push r1
+	push r2
+
+	loadn r1, #screenTuturialLinha0; Primeiro endereço da tela de tuturial
+	loadn r2, #0; Cor Branca
+	call  PrintScreen
+
+	;     -- Lê tecla do usuário para iniciar o jogo --
+	;     Fica verificando em loop a entrada do usuário
+	;     e enquanto não for precionado 'ENTER' o
+	;     jogo não inicia, e quando for precionado
+	;     limpa a tela e continua o programa
+	loadn r2, #13
+
+Tuturial_ScanChar:
+	inchar r1
+	cmp    r1, r2
+	jne    Tuturial_ScanChar
+	call   CleanScreen
+
+	pop r2
+	pop r1
 
 	; ----- Tela de Fim do Jogo -----
 
@@ -242,3 +304,8 @@ main:
 
 	;                        Game Over Federal Win
 	gameOverFederalWinLinha0 : sting ""
+
+	screenMenuLinha0 : string ""
+
+	screenTuturialLinha0 : string ""
+
