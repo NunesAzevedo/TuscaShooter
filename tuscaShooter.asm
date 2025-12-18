@@ -524,7 +524,7 @@ ChineladaCaasoPassouPrimeiraLinha:
 	push r1
 	push r2
 
-	; Coloca flagChineladaCaaso como 0
+	; Coloca o flag da Chinelada como 0
 
 	loadn r0, #0
 	store flagChineladaCaaso, r0
@@ -843,7 +843,7 @@ ChineladaFederupaPassouUltimaLinha:
 	push r1
 	push r2
 
-	; Coloca flagChineladaCaaso como 0
+	; Coloca o flag da Chinelada como 0
 
 	loadn r0, #0
 	store flagChineladaFederupa, r0
