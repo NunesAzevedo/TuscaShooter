@@ -2,7 +2,7 @@
 ## Implementar funções
 - [ ] main
 - [ ] PrintValuesHud
-- [ ] GameOverCaasoWin
+- [x] GameOverCaasoWin
 
 
 ## Testar funções
@@ -10,6 +10,8 @@
 - [ ] CleanScreen
 - [ ] Delay
 - [ ] PrintHud 
-
-
+- [ ] StartGameScreen
+- [ ] EndGameScreen
+- [ ] GameOverCaasoWin
+- [ ] GameOverFederalWin
 

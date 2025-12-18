@@ -1,4 +1,4 @@
-;call menu
+;call StartGameScreen
 
 	jmp main
 
@@ -135,7 +135,7 @@ Delay_loop:
 	pop r0
 	rts
 
-	; Printa HUD
+	; --------------- Printa HUD ---------------
 
 PrintHud:
 	push r0; Armazena posição para começar a printar
@@ -149,7 +149,7 @@ PrintHud:
 	pop r0
 	rts
 
-	; Printa os valores da HUD
+	; -------------- Printa os valores da HUD --------------
 
 PrintValuesHud:
 	push r0
@@ -172,23 +172,73 @@ PrintValuesHud:
 
 	; Printa tela de Fim de jogo
 
-GameOverCaasoWin:
-	push r0
-	push r1
-	push r2
-	push r3
-	push r4
+	; --------- Tela de Game Over quando o CAASO Vence ---------
 
-	loadn r0, #0; Posição do começo da tela
-	loadn r1, #gameOverLinha0; Endereço da tela de Game Over
+GameOverCaasoWin:
+	loadn r0, #0; Posição do início  tela
+	loadn r1, #gameOverCaasoWinLinha0
 	call  PrintScreen
 
-	load  r0, lifesFederupa
-	loadn r1, #582; Posição para printar as vidas do federupa
+	; Pergunta ao jogador se quer jogar novamente
+	; s: Jogar novamente
+	; n: Finaliza o jogo
 
-	; Print da dez
+GameOverCaasoWin_ScanChar:
+	inchar r0; Lê uma tecla do teclado
+	loadn  r1, #'s'
+	cmp    r0, r1
+	jeq    StartGameScreen
+
+	loadn r1, #' '
+	cmp   r0, r1
+	jeq   EndGameScreen
+
+	;   Se nenhuma tecla for precionada
+	;   volta para o início do loop
+	jmp GameOverCaasoWin_ScanChar
+
+	; --------- Tela de Game Over quando a Federal Vence ---------
+
+GameOverFederalWin:
+	loadn r0, #0; Posição do início  tela
+	loadn r1, #gameOverFederalWinLinha0
+	call  PrintScreen
+
+	; Pergunta ao jogador se quer jogar novamente
+	; s: Jogar novamente
+	; n: Finaliza o jogo
+
+GameOverFederalWin_ScanChar:
+	inchar r0; Lê uma tecla do teclado
+	loadn  r1, #'s'
+	cmp    r0, r1
+	jeq    StartGameScreen
+
+	loadn r1, #' '
+	cmp   r0, r1
+	jeq   EndGameScreen
+
+	;   Se nenhuma tecla for precionada
+	;   volta para o início do loop
+	jmp GameOverFederalWin_ScanChar
+
+	; ----- Tela de Início do Jogo -----
+
+StartGameScreen:
+	; === FALTA IMPLEMENTAR ===
+
+	; ----- Tela de Fim do Jogo -----
+
+EndGameScreen:
+	; === FALTA IMPLEMENTAR ===
 
 main:
 
 	halt
 
+	;                      ================== Cenários ==================
+	;                      Game Over CAASO Win
+	gameOverCaasoWinLinha0 : sting ""
+
+	;                        Game Over Federal Win
+	gameOverFederalWinLinha0 : sting ""
