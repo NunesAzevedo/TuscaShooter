@@ -292,7 +292,10 @@ Tuturial_ScanChar:
 	; ----- Tela de Fim do Jogo -----
 
 EndGameScreen:
-	; === FALTA IMPLEMENTAR ===
+	loadn r0, #0; Posição do começo da tela
+	loadn r1, #endGameScreenLinha0
+	call  PrintScreen
+	halt
 
 main:
 
@@ -308,4 +311,4 @@ main:
 	screenMenuLinha0 : string ""
 
 	screenTuturialLinha0 : string ""
-
+	endGameScreenLinha0  : string ""
