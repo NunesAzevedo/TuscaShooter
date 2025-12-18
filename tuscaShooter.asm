@@ -299,12 +299,330 @@ EndGameScreen:
 
 	; --- Responsável pela movimentação do jogador do CAASO ---
 
-MovimentacaoCaaso:
+Caaso:
+	call DrawCaaso
+	call MoveCaaso
+	rts
+
+DrawCaaso:
+	; O jogador do CAASO será composto por 4 caracteres
+	; C1 C3
+	; C2 C4
+
+	push r0
+	push r1
+
+	loadn   r0, #'c'; Caractere C1
+	load    r1, posCaasoUp; Posição do C1
+	outchar r0, r1
+
+	inc     r0; Caractere C3
+	inc     r1; Posição do C3
+	outchar r0, r1
+
+	inc     r0; Caractere C2
+	load    r1, posCaasoDown; Posição C2
+	outchar r0, r1
+
+	inc r0; Caractere C4
+	inc r1; Posição C4
+
+	pop r1
+	pop r0
+	rts
+
+	; --- Apaga o jogador do CAASO ---
+
+EraseCaaso:
+	push r0
+	push r1
+	push r2
+
+	loadn r0, #' '; Caractere Vazio (Espaço)
+	load  r1, posCaasoUp; Posição do C1
+	load  r2, posCaasoDown; Posição do C2
+
+	outchar r0, r1
+	outchar r0, r2
+
+	inc r1; Posição C3
+	inc r2; Posição C4
+
+	outchar r0, r1
+	outchar r0, r2
+
+	pop r2
+	pop r1
+	pop r0
+	rts
+
+MoveCaaso:
+	; Movimentação do jogador do Caaso
+	; será dada pelas teclas A, D e Espaço:
+	; A     : Movimenta para a Esquerda
+	; D     : Movimenta para a Direita
+	; Espaço: Chinelada
+
+	push r0
+	push r1
+	push r2
+	push r3
+
+	inchar r0
+
+	loadn r1, #'a'
+	cmp   r0, r1
+	ceq   MoveCaasoLeft
+
+	loadn r1, #'d'
+	cmp   r0, r1
+	ceq   MoveCaasoRight
+
+	; Verifica se o jogador do Caaso
+	; Atirou o chinelo
+
+	loadn r1, #' '
+	load  r2, flagChineladaCaaso
+	loadn r3, #1
+	cmp   r2, r3
+	jeq   CaasoAtirouOChinelo_Skip
+
+	cmp r0, r1
+	ceq CaasoAtirouOChinelo
+
+CaasoAtirouOChinelo_Skip:
+	pop r3
+	pop r2
+	pop r1
+	pop r0
+	rts
+
+MoveCaasoLeft:
+	push r0
+	push r1
+
+	; Caso em que o jogador do Caaso está
+	; na borda da tela
+
+	load  r0, posCaasoUp
+	loadn r1, #1041
+	cmp   r0, r1
+	jle   MoveCaasoLeft_Skip; Não faz nada
+
+	call EraseCaaso
+
+	; Decrementa a posição do jogador do Caaso
+
+	load  r0, posCaasoUp
+	dec   r0
+	store posCaasoUp, r0
+
+	load  r0, posCaasoDown
+	dec   r0
+	store posCaasoDown, r0
+
+	call DrawCaaso
+
+MoveCaasoLeft_Skip:
+	pop r1
+	pop r0
+	rts
+
+MoveCaasoRight:
+	push r0
+	push r1
+
+	; Caso em que o jogador do Caaso está
+	; na borda da tela
+
+	load  r0, posCaasoUp
+	loadn r1, #1077
+	cmp   r0, r1
+	jle   MoveCaasoRight_Skip; Não faz nada
+
+	call EraseCaaso
+
+	; Decrementa a posição do jogador do Caaso
+
+	load  r0, posCaasoUp
+	dec   r0
+	store posCaasoUp, r0
+
+	load  r0, posCaasoDown
+	dec   r0
+	store posCaasoDown, r0
+
+	call DrawCaaso
+
+MoveCaasoRight_Skip:
+	pop r1
+	pop r0
+	rts
+
+CaasoAtirouOChinelo:
 	;=== FALTA IMPLEMENTAR ===
 
 	; --- Responsável pela movimentação do jogador da Federal ---
 
-MovimentacaoFederupa:
+Federupa:
+	call DrawFederupa
+	call MoveFederupa
+
+DrawFederupa:
+	; O Federupa será composto por 4 caracteres
+	; F1 F3
+	; F2 F4
+
+	push r0
+	push r1
+
+	loadn   r0, #'f'; Caractere F1
+	load    r1, posFederupaUp; Posição do F1
+	outchar r0, r1
+
+	inc     r0; Caractere F3
+	inc     r1; Posição do F3
+	outchar r0, r1
+
+	inc     r0; Caractere F2
+	load    r1, posFederupaDown; Posição F2
+	outchar r0, r1
+
+	inc r0; Caractere F4
+	inc r1; Posição F4
+
+	pop r1
+	pop r0
+	rts
+
+	; --- Apaga o Federupa ---
+
+EraseFederupa:
+	push r0
+	push r1
+	push r2
+
+	loadn r0, #' '; Caractere Vazio (Espaço)
+	load  r1, posFederupaUp; Posição do F1
+	load  r2, posFederupaDown; Posição do F2
+
+	outchar r0, r1
+	outchar r0, r2
+
+	inc r1; Posição F3
+	inc r2; Posição F4
+
+	outchar r0, r1
+	outchar r0, r2
+
+	pop r2
+	pop r1
+	pop r0
+	rts
+
+MoveFederupa:
+	;    Movimentação do Federupa
+	;    será dada pelas teclas J, K e Enter:
+	;    J    : Movimenta para a Esquerda
+	;    K    : Movimenta para a Direita
+	;    Enter: Chinelada
+	push r0
+	push r1
+	push r2
+	push r3
+
+	inchar r0
+
+	loadn r1, #'j'
+	cmp   r0, r1
+	ceq   MoveFederupaLeft
+
+	loadn r1, #'k'
+	cmp   r0, r1
+	ceq   MoveFederupaRight
+
+	; Verifica se o jogador do Caaso
+	; Atirou o chinelo
+
+	loadn r1, #12; Enter = 12
+	load  r2, flagChineladaFederupa
+	loadn r3, #1
+	cmp   r2, r3
+	jeq   FederupaAtirouOChinelo_Skip
+
+	cmp r0, r1
+	ceq FederupaAtirouOChinelo
+
+FederupaAtirouOChinelo_Skip:
+	pop r3
+	pop r2
+	pop r1
+	pop r0
+	rts
+
+MoveFederupaLeft:
+	push r0
+	push r1
+
+	; Caso em que o Federupa está
+	; na borda da tela
+
+	load  r0, posFederupaUp
+	loadn r1, #0
+	cmp   r0, r1
+	jle   MoveFederupaLeft_Skip; Não faz nada
+
+	call EraseFederupa
+
+	; Decrementa a posição do Federupa
+
+	load  r0, posFederupaUp
+	dec   r0
+	store posFederupaUp, r0
+
+	load  r0, posFederupaDown
+	dec   r0
+	store posFederupaDown, r0
+
+	call DrawFederupa
+
+MoveFederupaLeft_Skip:
+	pop r1
+	pop r0
+	rts
+
+MoveFederupaRight:
+	push r0
+	push r1
+
+	; Caso em que o Federupa está
+	; na borda da tela
+
+	load  r0, posFederupaUp
+	loadn r1, #39
+	cmp   r0, r1
+	jle   MoveFederupaRight_Skip; Não faz nada
+
+	call EraseFederupa
+
+	; Decrementa a posição do jogador do Caaso
+
+	load  r0, posFederupaUp
+	dec   r0
+	store posFederupaUp, r0
+
+	load  r0, posFederupaDown
+	dec   r0
+	store posFederupaDown, r0
+
+	call DrawFederupa
+
+MoveFederupaRight_Skip:
+	pop r1
+	pop r0
+	rts
+
+FederupaAtirouOChinelo:
 	;=== FALTA IMPLEMENTAR ===
 
 	; --- Responsável pela Chinelada do jogador do CAASO ---
