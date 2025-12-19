@@ -500,11 +500,24 @@ ChineladaCaasoMove:
 	push r0
 	push r1
 	push r2
+	push r3
 
-	load  r0, posChineloCaaso
-	call  EraseCaasoChinelo
+	load r0, posChineloCaaso
+	call EraseCaasoChinelo
+
+	mov   r3, r0; Salva a posição velha em r3
 	loadn r2, #40; Move a posição do chinelo uma linha acima
 	sub   r0, r0, r2
+
+	;-- Protecao contra Underflow --
+	;   Se a posicao nova (r0) ficou
+	;   maior que a antiga (r3)
+	;   significa que houve um Underflow
+	;   e o numero ficou enorme, por nao
+	;   poder ficar negativo
+
+	cmp r0, r3
+	cgr ChineladaCaasoPassouPrimeiraLinha
 
 	; Verifica se ele atingiu a borda da tela
 
@@ -515,6 +528,7 @@ ChineladaCaasoMove:
 	store posChineloCaaso, r0
 	call  ChineladaCaasoDraw
 
+	pop r3
 	pop r2
 	pop r1
 	pop r0
@@ -822,11 +836,18 @@ ChineladaFederupaMove:
 	push r0
 	push r1
 	push r2
+	push r3
 
-	load  r0, posChineloFederupa
-	call  EraseFederupaChinelo
+	load r0, posChineloFederupa
+	call EraseFederupaChinelo
+
+	mov   r3, r0; Salva a posição antiga em r3
 	loadn r2, #40; Move a posição do chinelo uma linha acima
 	add   r0, r0, r2
+
+	;   -- Protecao contra Overflow --
+	cmp r0, r3
+	cle ChineladaFederupaPassouUltimaLinha
 
 	; Verifica se ele atingiu a borda da tela
 
@@ -837,6 +858,7 @@ ChineladaFederupaMove:
 	store posChineloFederupa, r0
 	call  ChineladaFederupaDraw
 
+	pop r3
 	pop r2
 	pop r1
 	pop r0
