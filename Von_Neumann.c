@@ -1,7 +1,7 @@
 /*
  * PROCESSADOR VON NEUMANN - SIMULADO
- * Compilar: gcc Von_Newmann.c -O3 -Wall -lm -o Von_Newmann
- * Executar: ./Von_Newmann
+ * Compilar: gcc Von_Neumann.c -O3 -Wall -lm -o Von_Neumann
+ * Executar: ./Von_Neumann
  * Requisito: Arquivo cpuram.mif na mesma pasta
  */
 
