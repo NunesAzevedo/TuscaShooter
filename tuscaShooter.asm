@@ -324,8 +324,9 @@ DrawCaaso:
 	load    r1, posCaasoDown; Posição C2
 	outchar r0, r1
 
-	inc r0; Caractere C4
-	inc r1; Posição C4
+	inc     r0; Caractere C4
+	inc     r1; Posição C4
+	outchar r0, r1
 
 	pop r1
 	pop r0
@@ -574,7 +575,7 @@ ChineladaCaasoDraw:
 	load  r1, posChineloCaaso
 	loadn r2, #'['
 	loadn r3, #']'
-	loadn r4, #'\'
+	loadn r4, #92; '\' em na tabela asc
 	loadn r5, #'^'
 
 	outchar r2, r1
@@ -664,8 +665,9 @@ DrawFederupa:
 	load    r1, posFederupaDown; Posição F2
 	outchar r0, r1
 
-	inc r0; Caractere F4
-	inc r1; Posição F4
+	inc     r0; Caractere F4
+	inc     r1; Posição F4
+	outchar r0, r1
 
 	pop r1
 	pop r0
@@ -921,7 +923,7 @@ ChineladaFederupaDraw:
 	load  r1, posChineloFederupa
 	loadn r2, #'['
 	loadn r3, #']'
-	loadn r4, #'\'
+	loadn r4, #92; '\' em na tabela asc
 	loadn r5, #'^'
 
 	;       Desenha parte de cima
