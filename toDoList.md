@@ -1,6 +1,6 @@
 # To do 
 ## Implementar funções
-- [ ] main
+- [x] main
 - [ ] PrintValuesHud
 - [x] GameOverCaasoWin
 

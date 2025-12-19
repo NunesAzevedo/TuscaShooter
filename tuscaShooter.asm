@@ -171,7 +171,11 @@ PrintValuesHud:
 	push r3
 	push r4
 
+<<<<<<< HEAD
 	loadn r0, #lifesCaaso
+=======
+	load  r0, lifesCaaso
+>>>>>>> 9a405e2 (Fix some issues)
 	loadn r1, #48; Fator de correção para tabela ASCII
 	add   r0, r0, r1
 
@@ -242,8 +246,13 @@ StartGameScreen:
 	push r2
 
 	loadn r1, #screenStartGameLinha0; Primeiro endereço da tela
+<<<<<<< HEAD
 	loadn  r2, #0; Cor Branca
 	call   PrintScreen
+=======
+	loadn r2, #0; Cor Branca
+	call  PrintScreen
+>>>>>>> 9a405e2 (Fix some issues)
 
 	;     -- Lê tecla do usuário para iniciar o jogo --
 	;     Fica verificando em loop a entrada do usuário
@@ -1185,7 +1194,7 @@ Main_loop:
 	loadn r1, #10
 	mod   r1, r0, r1
 	cmp   r1, r2
-	ceq   MovimentacaoCaaso
+	ceq   Caaso
 
 	;     ======================
 	;     Chinelada do CAASO
@@ -1204,7 +1213,7 @@ Main_loop:
 	loadn r1, #30
 	mod   r1, r0, r1
 	cmp   r1, r2
-	ceq   MovimentacaoFederupa
+	ceq   Federupa
 
 	;     ======================
 	;     Chinelada do Federupa
