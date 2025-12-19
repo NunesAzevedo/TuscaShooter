@@ -169,6 +169,8 @@ PrintValuesHud:
 	load    r0, lifesCaaso
 	loadn   r1, #48; Fator de correção para tabela ASC
 	add     r0, r0, r1
+	loadn   r1, #768; Cor Amarela
+	add     r0, r0, r1; Adiciona cor ao caractere
 	loadn   r1, #1174; Posição da tela da vida do Caaso
 	outchar r0, r1
 
@@ -177,6 +179,8 @@ PrintValuesHud:
 	load    r0, lifesFederupa
 	loadn   r1, #48; Fator e correção para tabela ASC
 	add     r0, r0, r1
+	loadn   r1, #7936; Cor Vermelha
+	add     r0, r0, r1; Adiciona cor ao caractere
 	loadn   r1, #1199; Posição das vidas da Federal
 	outchar r0, r1
 
