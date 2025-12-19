@@ -122,21 +122,19 @@ CleanScreen_loop:
 	rts
 
 	; --- Causa Delay no jogo para controlar o fps ---
-	; Passa por vários ciclos fazendo nada
-	; afim de esperar o tempo de 1 segundo passar
-	; no clock de 1 MHz em 2 loops de 1000 ciclos cada
-	; fazendo gastar tempo de forma que:
-	; (1000) * (1000) = 1 seg (Clock: 1 MHz)
+	; Passa por vários ciclos sem fazer nada a fim
+	; de deixar o tempo passar e, com isso, causar um
+	; delay controlado no fps do jogo
 
 Delay:
 
 	push r0; Armazena quantidade de clocks ignorados
 	push r1
 
-	loadn r0, #1000
+	loadn r0, #10
 
 Delay_loop1:
-	loadn r1, #1000
+	loadn r1, #100
 
 Delay_loop2:
 	dec r1
@@ -173,7 +171,7 @@ PrintValuesHud:
 	load    r0, lifesCaaso
 	loadn   r1, #48; Fator de correção para tabela ASC
 	add     r0, r0, r1
-	loadn   r1, #1168; Posição da tela da vida do Caaso
+	loadn   r1, #1174; Posição da tela da vida do Caaso
 	outchar r0, r1
 
 	; Print das vidas do Federupa
@@ -181,7 +179,7 @@ PrintValuesHud:
 	load    r0, lifesFederupa
 	loadn   r1, #48; Fator e correção para tabela ASC
 	add     r0, r0, r1
-	loadn   r1, #1197; Posição das vidas da Federal
+	loadn   r1, #1199; Posição das vidas da Federal
 	outchar r0, r1
 
 	pop r1
@@ -281,6 +279,7 @@ Tuturial:
 	;     e enquanto não for precionado 'ENTER' o
 	;     jogo não inicia, e quando for precionado
 	;     limpa a tela e continua o programa
+	call  Delay; Para não pular direto com o 'ENTER' da tela anterior
 	loadn r2, #13
 
 Tuturial_ScanChar:
@@ -442,18 +441,18 @@ MoveCaasoRight:
 	load  r0, posCaasoUp
 	loadn r1, #1077
 	cmp   r0, r1
-	jle   MoveCaasoRight_Skip; Não faz nada
+	jgr   MoveCaasoRight_Skip; Não faz nada
 
 	call EraseCaaso
 
 	; Decrementa a posição do jogador do Caaso
 
 	load  r0, posCaasoUp
-	dec   r0
+	inc   r0
 	store posCaasoUp, r0
 
 	load  r0, posCaasoDown
-	dec   r0
+	inc   r0
 	store posCaasoDown, r0
 
 	call DrawCaaso
@@ -702,7 +701,7 @@ MoveFederupa:
 	; Verifica se o jogador do Caaso
 	; Atirou o chinelo
 
-	loadn r1, #12; Enter = 12
+	loadn r1, #13; Enter = 13
 	load  r2, flagChineladaFederupa
 	loadn r3, #1
 	cmp   r2, r3
@@ -759,18 +758,18 @@ MoveFederupaRight:
 	load  r0, posFederupaUp
 	loadn r1, #39
 	cmp   r0, r1
-	jle   MoveFederupaRight_Skip; Não faz nada
+	jgr   MoveFederupaRight_Skip; Não faz nada
 
 	call EraseFederupa
 
 	; Decrementa a posição do jogador do Caaso
 
 	load  r0, posFederupaUp
-	dec   r0
+	inc   r0
 	store posFederupaUp, r0
 
 	load  r0, posFederupaDown
-	dec   r0
+	inc   r0
 	store posFederupaDown, r0
 
 	call DrawFederupa
@@ -1124,9 +1123,10 @@ Main:
 	; Setup inicial das variáveis do jogo
 	; ===================================
 
-	;     Salva quantidades de vidas
-	;     dos jogadores
-	loadn r0, #10
+	; Salva quantidades de vidas
+	; dos jogadores
+
+	loadn r0, #5
 	store lifesCaaso, r0
 	store lifesFederupa, r0
 
