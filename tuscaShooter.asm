@@ -55,7 +55,7 @@ PrintStr_loop:
 
 	;   Verifica se chegou ao final da string
 	cmp r4, r3
-	jeq PrintStr_Final
+	jeq PrintStr_Skip
 
 	add     r4, r2, r4; Adiciona cor à string
 	outchar r4, r0
@@ -63,7 +63,7 @@ PrintStr_loop:
 	inc     r1
 	jmp     PrintStr_loop
 
-PrintStr_Final:
+PrintStr_Skip:
 	pop r4
 	pop r3
 	pop r2
@@ -205,7 +205,7 @@ GameOverCaasoWin_ScanChar:
 	cmp    r0, r1
 	jeq    StartGameScreen
 
-	loadn r1, #' '
+	loadn r1, #'n'
 	cmp   r0, r1
 	jeq   EndGameScreen
 
@@ -230,7 +230,7 @@ GameOverFederalWin_ScanChar:
 	cmp    r0, r1
 	jeq    StartGameScreen
 
-	loadn r1, #' '
+	loadn r1, #'n'
 	cmp   r0, r1
 	jeq   EndGameScreen
 
@@ -1227,39 +1227,40 @@ Main_loop:
 	inc  r0; Incrementa o contador de estados do jogo
 	jmp  Main_loop
 
-	;                         ================== Cenários ==================
-	;                         Game Over CAASO Win
-	gameOverCaasoWinLinha0    : string "                                        "
-	gameOverCaasoWinLinha1    : string "                                        "
-	gameOverCaasoWinLinha2    : string "                                        "
-	gameOverCaasoWinLinha3    : string "                                        "
-	gameOverCaasoWinLinha4    : string "                                        "
-	gameOverCaasoWinLinha5    : string "                                        "
-	gameOverCaasoWinLinha6    : string "                                        "
-	gameOverCaasoWinLinha7    : string "                                        "
-	gameOverCaasoWinLinha8    : string "                                        "
-	gameOverCaasoWinLinha9    : string "                                        "
-	gameOverCaasoWinLinha10   : string "            XUPA FEDERUPA               "
-	gameOverCaasoWinLinha11   : string "                                        "
-	gameOverCaasoWinLinha12   : string "                                        "
-	gameOverCaasoWinLinha13   : string "                                        "
-	gameOverCaasoWinLinha14   : string "                                        "
-	gameOverCaasoWinLinha15   : string "                                        "
-	gameOverCaasoWinLinha16   : string "                                        "
-	gameOverCaasoWinLinha17   : string "                                        "
-	gameOverCaasoWinLinha18   : string "                                        "
-	gameOverCaasoWinLinha19   : string "                                        "
-	gameOverCaasoWinLinha20   : string "                                        "
-	gameOverCaasoWinLinha21   : string "                                        "
-	gameOverCaasoWinLinha22   : string "                                        "
-	gameOverCaasoWinLinha23   : string "                                        "
-	gameOverCaasoWinLinha24   : string "                                        "
-	gameOverCaasoWinLinha25   : string "                                        "
-	gameOverCaasoWinLinha26   : string "                                        "
-	gameOverCaasoWinLinha27   : string "                                        "
-	gameOverCaasoWinLinha28   : string "                                        "
-	gameOverCaasoWinLinha29   : string "                                        "
-	;                         Game Over Federal Win
+	;                       ================== Cenários ==================
+	;                       ----------------------- Game Over CAASO Win -----------------------------
+	gameOverCaasoWinLinha0  : string "                                        "
+	gameOverCaasoWinLinha1  : string "                                        "
+	gameOverCaasoWinLinha2  : string "                                        "
+	gameOverCaasoWinLinha3  : string "                                        "
+	gameOverCaasoWinLinha4  : string "                                        "
+	gameOverCaasoWinLinha5  : string "                                        "
+	gameOverCaasoWinLinha6  : string "                                        "
+	gameOverCaasoWinLinha7  : string "                                        "
+	gameOverCaasoWinLinha8  : string "                                        "
+	gameOverCaasoWinLinha9  : string "                                        "
+	gameOverCaasoWinLinha10 : string "            XUPA FEDERUPA               "
+	gameOverCaasoWinLinha11 : string "                                        "
+	gameOverCaasoWinLinha12 : string "                                        "
+	gameOverCaasoWinLinha13 : string "                                        "
+	gameOverCaasoWinLinha14 : string "                                        "
+	gameOverCaasoWinLinha15 : string "                                        "
+	gameOverCaasoWinLinha16 : string "                                        "
+	gameOverCaasoWinLinha17 : string "                                        "
+	gameOverCaasoWinLinha18 : string "                                        "
+	gameOverCaasoWinLinha19 : string "                                        "
+	gameOverCaasoWinLinha20 : string "                                        "
+	gameOverCaasoWinLinha21 : string "                                        "
+	gameOverCaasoWinLinha22 : string "                                        "
+	gameOverCaasoWinLinha23 : string "                                        "
+	gameOverCaasoWinLinha24 : string "                                        "
+	gameOverCaasoWinLinha25 : string "                                        "
+	gameOverCaasoWinLinha26 : string "                                        "
+	gameOverCaasoWinLinha27 : string "                                        "
+	gameOverCaasoWinLinha28 : string "                                        "
+	gameOverCaasoWinLinha29 : string "                                        "
+
+	;                         ----------------------- Game Over Federal Win ------------------------------
 	gameOverFederalWinLinha0  : string "                                        "
 	gameOverFederalWinLinha1  : string "                                        "
 	gameOverFederalWinLinha2  : string "                                        "
@@ -1291,14 +1292,14 @@ Main_loop:
 	gameOverFederalWinLinha28 : string "                                        "
 	gameOverFederalWinLinha29 : string "                                        "
 
-	;                      Tela inicial do jogo
+	;                      -------------------- Tela inicial do jogo -----------------------------
 	screenStartGameLinha0  : string "                                        "
 	screenStartGameLinha1  : string "                                        "
 	screenStartGameLinha2  : string "                                        "
 	screenStartGameLinha3  : string "                                        "
 	screenStartGameLinha4  : string "                                        "
-	screenStartGameLinha5  : string "               (tela inicial)           "
-	screenStartGameLinha6  : string "                                        "
+	screenStartGameLinha5  : string "               OUWLAW                   "
+	screenStartGameLinha6  : string "           TUSCA EDITION                "
 	screenStartGameLinha7  : string "                                        "
 	screenStartGameLinha8  : string "                                        "
 	screenStartGameLinha9  : string "                                        "
@@ -1323,7 +1324,7 @@ Main_loop:
 	screenStartGameLinha28 : string "                                        "
 	screenStartGameLinha29 : string "                                        "
 
-	;                     Tela do tuturial do jogo
+	;                     ------------------- Tela do tuturial do jogo ------------------------
 	screenTuturialLinha0  : string "                                        "
 	screenTuturialLinha1  : string "                                        "
 	screenTuturialLinha2  : string "                                        "
@@ -1355,7 +1356,7 @@ Main_loop:
 	screenTuturialLinha28 : string "                                        "
 	screenTuturialLinha29 : string "                                        "
 
-	;                    Tela final do jogo
+	;                    ------------------ Tela final do jogo -------------------------------
 	endGameScreenLinha0  : string "                                        "
 	endGameScreenLinha1  : string "                                        "
 	endGameScreenLinha2  : string "                                        "
