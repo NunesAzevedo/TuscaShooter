@@ -618,13 +618,26 @@ EraseCaasoChinelo:
 	cmp   r1, r2
 	jeq   EraseCaasoChinelo_Skip
 
-	; Desenha Espaço vazio na
-	; posição do chinelo
-
-	add     r1, r1, r3
+	;       Apaga parte de Cima
 	outchar r0, r1
 	inc     r1
 	outchar r0, r1
+
+	dec r1; Volta para a Esquerda
+	add r1, r1, r3; Descu uma linha
+
+	;       Apaga a parte de Baixo
+	outchar r0, r1
+	inc     r1
+	outchar r0, r1
+
+	; Desenha Espaço vazio na
+	; posição do chinelo
+
+	; add     r1, r1, r3
+	; outchar r0, r1
+	; inc     r1
+	; outchar r0, r1
 
 EraseCaasoChinelo_Skip:
 	pop r3
