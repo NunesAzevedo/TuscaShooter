@@ -508,7 +508,7 @@ ChineladaCaasoMove:
 
 	; Verifica se ele atingiu a borda da tela
 
-	loadn r1, #40
+	loadn r1, #10
 	cmp   r0, r1
 	cle   ChineladaCaasoPassouPrimeiraLinha
 
@@ -830,9 +830,9 @@ ChineladaFederupaMove:
 
 	; Verifica se ele atingiu a borda da tela
 
-	loadn r1, #1040
+	loadn r1, #1120
 	cmp   r0, r1
-	cle   ChineladaFederupaPassouUltimaLinha
+	cgr   ChineladaFederupaPassouUltimaLinha
 
 	store posChineloFederupa, r0
 	call  ChineladaFederupaDraw
@@ -948,6 +948,12 @@ IsCaasoHit:
 	push r0
 	push r1
 
+	;     Verifica se a flag do chinelo esta ativa
+	loadn r0, #0
+	load  r1, flagChineladaFederupa
+	cmp   r0, r1
+	jeq   IsCaasoHit_Skip
+
 	; =====================================
 	; Compara
 	; -------------------------------------
@@ -1009,6 +1015,12 @@ IsCaasoHit_Skip:
 IsFederupaHit:
 	push r0
 	push r1
+
+	;     Verifica se a flag do chinelo esta ativa
+	loadn r0, #0
+	load  r1, flagChineladaCaaso
+	cmp   r0, r1
+	jeq   IsFederupaHit_Skip
 
 	; =====================================
 	; Compara
@@ -1098,6 +1110,7 @@ IsFederupaAlive:
 
 DecLifeCaaso:
 	push r0
+	push r1
 
 	; Decrementa vidas do CAASO
 
@@ -1111,6 +1124,18 @@ DecLifeCaaso:
 	inc   r0
 	store lifesFederupa, r0
 
+	;    Apaga o chinelo
+	call EraseFederupaChinelo
+
+	;     Zera a flag da chinelada
+	loadn r0, #0
+	store flagChineladaFederupa, r0
+
+	;     Teletransporta o chinelo para longe
+	;     para evitar multipla colisao
+	store posChineloFederupa, r0
+
+	pop r1
 	pop r0
 	rts
 
@@ -1118,6 +1143,7 @@ DecLifeCaaso:
 
 DecLifeFederupa:
 	push r0
+	push r1
 
 	; Decrementa a vida do Federupa
 
@@ -1131,6 +1157,18 @@ DecLifeFederupa:
 	inc   r0
 	store lifesCaaso, r0
 
+	;    Apaga o chinelo
+	call EraseCaasoChinelo
+
+	;     Zera a flag da chinelada
+	loadn r0, #0
+	store flagChineladaCaaso, r0
+
+	;     Teletransporta o chinelo para longe
+	;     para evitar multipla colisao
+	store posChineloCaaso, r0
+
+	pop r1
 	pop r0
 	rts
 
@@ -1280,13 +1318,13 @@ Main_loop:
 	gameOverCaasoWinLinha11 : string "                                        "
 	gameOverCaasoWinLinha12 : string "                                        "
 	gameOverCaasoWinLinha13 : string "                                        "
-	gameOverCaasoWinLinha14 : string "                                        "
-	gameOverCaasoWinLinha15 : string "                                        "
+	gameOverCaasoWinLinha14 : string "         VOCE QUER JOGAR                "
+	gameOverCaasoWinLinha15 : string "            NOVAMENTE?                  "
 	gameOverCaasoWinLinha16 : string "                                        "
-	gameOverCaasoWinLinha17 : string "                                        "
-	gameOverCaasoWinLinha18 : string "                                        "
-	gameOverCaasoWinLinha19 : string "                                        "
-	gameOverCaasoWinLinha20 : string "                                        "
+	gameOverCaasoWinLinha17 : string "      S: JOGAR NOVAMENTE                "
+	gameOverCaasoWinLinha18 : string "      N: IR CURTIR O TUSCA              "
+	gameOverCaasoWinLinha19 : string "         (E A VITORIA SOBRE             "
+	gameOverCaasoWinLinha20 : string "             A FEDERAL)                 "
 	gameOverCaasoWinLinha21 : string "                                        "
 	gameOverCaasoWinLinha22 : string "                                        "
 	gameOverCaasoWinLinha23 : string "                                        "
@@ -1315,11 +1353,11 @@ Main_loop:
 	gameOverFederalWinLinha14 : string "                                        "
 	gameOverFederalWinLinha15 : string "                                        "
 	gameOverFederalWinLinha16 : string "                                        "
-	gameOverFederalWinLinha17 : string "                                        "
-	gameOverFederalWinLinha18 : string "                                        "
+	gameOverFederalWinLinha17 : string "         VOCE QUER JOGAR                "
+	gameOverFederalWinLinha18 : string "             NOVAMENTE?                 "
 	gameOverFederalWinLinha19 : string "                                        "
-	gameOverFederalWinLinha20 : string "                                        "
-	gameOverFederalWinLinha21 : string "                                        "
+	gameOverFederalWinLinha20 : string "     S: JOGAR NOVAMENTE                 "
+	gameOverFederalWinLinha21 : string "     N: IR CURTIR O TUSCA               "
 	gameOverFederalWinLinha22 : string "                                        "
 	gameOverFederalWinLinha23 : string "                                        "
 	gameOverFederalWinLinha24 : string "                                        "
@@ -1335,12 +1373,12 @@ Main_loop:
 	screenStartGameLinha2  : string "                                        "
 	screenStartGameLinha3  : string "                                        "
 	screenStartGameLinha4  : string "                                        "
-	screenStartGameLinha5  : string "               OUWLAW                   "
+	screenStartGameLinha5  : string "               OUTLAW                   "
 	screenStartGameLinha6  : string "           TUSCA EDITION                "
 	screenStartGameLinha7  : string "                                        "
 	screenStartGameLinha8  : string "                                        "
-	screenStartGameLinha9  : string "                                        "
-	screenStartGameLinha10 : string "                                        "
+	screenStartGameLinha9  : string "          PRESSIONE ENTER               "
+	screenStartGameLinha10 : string "            PARA JOGAR                  "
 	screenStartGameLinha11 : string "                                        "
 	screenStartGameLinha12 : string "                                        "
 	screenStartGameLinha13 : string "                                        "
@@ -1366,25 +1404,25 @@ Main_loop:
 	screenTuturialLinha1  : string "                                        "
 	screenTuturialLinha2  : string "                                        "
 	screenTuturialLinha3  : string "                                        "
-	screenTuturialLinha4  : string "                                        "
+	screenTuturialLinha4  : string "          COMO JOGAR?                   "
 	screenTuturialLinha5  : string "                                        "
 	screenTuturialLinha6  : string "                                        "
-	screenTuturialLinha7  : string "                                        "
+	screenTuturialLinha7  : string "           RACA CAASO                   "
 	screenTuturialLinha8  : string "                                        "
-	screenTuturialLinha9  : string "                                        "
-	screenTuturialLinha10 : string "                                        "
-	screenTuturialLinha11 : string "                                        "
+	screenTuturialLinha9  : string "     A: ANDAR PARA A ESQUERDA           "
+	screenTuturialLinha10 : string "     D: ANDAR PARA A DIREITA            "
+	screenTuturialLinha11 : string "     ESPACO: DAR CHINELADA              "
 	screenTuturialLinha12 : string "                                        "
-	screenTuturialLinha13 : string "          (TELA TUTURIAL)                "
-	screenTuturialLinha14 : string "                                        "
-	screenTuturialLinha15 : string "                                        "
-	screenTuturialLinha16 : string "                                        "
-	screenTuturialLinha17 : string "                                        "
+	screenTuturialLinha13 : string "                                        "
+	screenTuturialLinha14 : string "            FEDERUPA                    "
+	screenTuturialLinha15 : string "     J: ANDAR PARA A ESQUERDA           "
+	screenTuturialLinha16 : string "     K: ANDAR PARA A DIREITA            "
+	screenTuturialLinha17 : string "     ENTER: DAR CHINELADA               "
 	screenTuturialLinha18 : string "                                        "
 	screenTuturialLinha19 : string "                                        "
 	screenTuturialLinha20 : string "                                        "
-	screenTuturialLinha21 : string "                                        "
-	screenTuturialLinha22 : string "                                        "
+	screenTuturialLinha21 : string "          PRESSIONE ENTER               "
+	screenTuturialLinha22 : string "           PARA JOGAR                   "
 	screenTuturialLinha23 : string "                                        "
 	screenTuturialLinha24 : string "                                        "
 	screenTuturialLinha25 : string "                                        "
