@@ -274,11 +274,10 @@ Tuturial:
 
 	;     -- Lê tecla do usuário para iniciar o jogo --
 	;     Fica verificando em loop a entrada do usuário
-	;     e enquanto não for precionado 'ENTER' o
+	;     e enquanto não for precionado 'T' o
 	;     jogo não inicia, e quando for precionado
 	;     limpa a tela e continua o programa
-	call  Delay; Para não pular direto com o 'ENTER' da tela anterior
-	loadn r2, #13
+	loadn r2, #'t'
 
 Tuturial_ScanChar:
 	inchar r1
@@ -1470,8 +1469,8 @@ Main_loop:
 	screenTuturialLinha18 : string "                                        "
 	screenTuturialLinha19 : string "                                        "
 	screenTuturialLinha20 : string "                                        "
-	screenTuturialLinha21 : string "          PRESSIONE ENTER               "
-	screenTuturialLinha22 : string "           PARA JOGAR                   "
+	screenTuturialLinha21 : string "          PRESSIONE  T                  "
+	screenTuturialLinha22 : string "           PARA TUSCAR                  "
 	screenTuturialLinha23 : string "                                        "
 	screenTuturialLinha24 : string "                                        "
 	screenTuturialLinha25 : string "                                        "
