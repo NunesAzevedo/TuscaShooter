@@ -1,37 +1,51 @@
-; r0 = 'A'
-LOADN r0
-65
+; =====================
+; Guarda "Oi" em r2 e r3
+; =====================
 
-; r1 = 'B'
-LOADN r1
-66
+LOADN r2, 'O'
+LOADN r3, 'i'
 
-; r2 = 'C'
-LOADN r2
-67
-
-OUTCHAR r0
-OUTCHAR r1
 OUTCHAR r2
-
-PUSHALL r2   ; salva r0, r1, r2
-
-; sobrescreve registradores
-LOADN r0
-120          ; 'x'
-LOADN r1
-121          ; 'y'
-LOADN r2
-122          ; 'z'
-
+OUTCHAR r3
+LOADN r0, '\n'
 OUTCHAR r0
-OUTCHAR r1
-OUTCHAR r2
 
-POPALL r2    ; restaura r2, r1, r0
 
+; =====================
+; Salva contexto r0–r3
+; =====================
+
+PUSHALL r3
+
+
+; =====================
+; Usa outros registradores
+; =====================
+
+LOADN r0, 'P'
 OUTCHAR r0
-OUTCHAR r1
+LOADN r0, 'r'
+OUTCHAR r0
+LOADN r0, 'o'
+OUTCHAR r0
+LOADN r0, 'f'
+OUTCHAR r0
+LOADN r0, '\n'
+OUTCHAR r0
+
+
+; =====================
+; Restaura contexto
+; =====================
+
+POPALL r3
+
+
+; =====================
+; Imprime "Oi" novamente
+; =====================
+
 OUTCHAR r2
+OUTCHAR r3
 
 HALT
