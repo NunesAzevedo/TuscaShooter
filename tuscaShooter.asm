@@ -311,8 +311,12 @@ DrawCaaso:
 
 	push r0
 	push r1
+	push r2
 
-	loadn   r0, #'<'; Caractere C1
+	loadn r0, #'<'; Caractere C1
+	loadn r2, #768; Cor Amarela
+	add   r0, r0, r2; Adiciona cor ao Caractere
+
 	load    r1, posCaasoUp; Posição do C1
 	outchar r0, r1
 
@@ -328,6 +332,7 @@ DrawCaaso:
 	inc     r1; Posição C4
 	outchar r0, r1
 
+	pop r2
 	pop r1
 	pop r0
 	rts
@@ -566,6 +571,7 @@ ChineladaCaasoDraw:
 	push r4
 	push r5
 	push r6
+	push r7
 
 	load  r1, flagChineladaCaaso
 	loadn r2, #0
@@ -577,6 +583,14 @@ ChineladaCaasoDraw:
 	loadn r3, #']'
 	loadn r4, #92; '\' em na tabela asc
 	loadn r5, #'^'
+
+	loadn r7, #768; Cor Amarela
+
+	;   Adiciona cor aos caracteres
+	add r2, r2, r7
+	add r3, r3, r7
+	add r4, r4, r7
+	add r5, r5, r7
 
 	outchar r2, r1
 
@@ -593,6 +607,7 @@ ChineladaCaasoDraw:
 	outchar r5, r1
 
 ChineladaCaasoDraw_Skip:
+	pop r7
 	pop r6
 	pop r5
 	pop r4
@@ -652,8 +667,12 @@ DrawFederupa:
 
 	push r0
 	push r1
+	push r2
 
-	loadn   r0, #'<'; Caractere F1
+	loadn r0, #'<'; Caractere F1
+	loadn r2, #7936; Cor Vermelha
+	add   r0, r0, r2; Adiciona cor ao caractere
+
 	load    r1, posFederupaUp; Posição do F1
 	outchar r0, r1
 
@@ -669,6 +688,7 @@ DrawFederupa:
 	inc     r1; Posição F4
 	outchar r0, r1
 
+	pop r2
 	pop r1
 	pop r0
 	rts
@@ -914,6 +934,7 @@ ChineladaFederupaDraw:
 	push r4
 	push r5
 	push r6
+	push r7
 
 	load  r1, flagChineladaFederupa
 	loadn r2, #0
@@ -925,6 +946,14 @@ ChineladaFederupaDraw:
 	loadn r3, #']'
 	loadn r4, #92; '\' em na tabela asc
 	loadn r5, #'^'
+
+	loadn r7, #7936; Cor Vermelha
+
+	;   Adiciona cor aos caracteres
+	add r2, r2, r7
+	add r3, r3, r7
+	add r4, r4, r7
+	add r5, r5, r7
 
 	;       Desenha parte de cima
 	outchar r2, r1
@@ -941,6 +970,7 @@ ChineladaFederupaDraw:
 	outchar r5, r1
 
 ChineladaFederupaDraw_Skip:
+	pop r7
 	pop r6
 	pop r5
 	pop r4
