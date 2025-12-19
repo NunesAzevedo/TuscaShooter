@@ -291,6 +291,7 @@ Tuturial_ScanChar:
 
 	pop r2
 	pop r1
+	rts
 
 	; ----- Tela de Fim do Jogo -----
 
