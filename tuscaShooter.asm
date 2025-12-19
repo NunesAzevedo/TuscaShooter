@@ -312,7 +312,7 @@ DrawCaaso:
 	push r0
 	push r1
 
-	loadn   r0, #'c'; Caractere C1
+	loadn   r0, #'<'; Caractere C1
 	load    r1, posCaasoUp; Posição do C1
 	outchar r0, r1
 
@@ -572,10 +572,10 @@ ChineladaCaasoDraw:
 	jeq   ChineladaCaasoDraw_Skip
 
 	load  r1, posChineloCaaso
-	loadn r2, #'W'
-	loadn r3, #'X'
-	loadn r4, #'w'
-	loadn r5, #'x'
+	loadn r2, #'['
+	loadn r3, #']'
+	loadn r4, #'\'
+	loadn r5, #'^'
 
 	outchar r2, r1
 
@@ -652,7 +652,7 @@ DrawFederupa:
 	push r0
 	push r1
 
-	loadn   r0, #'f'; Caractere F1
+	loadn   r0, #'<'; Caractere F1
 	load    r1, posFederupaUp; Posição do F1
 	outchar r0, r1
 
@@ -919,10 +919,10 @@ ChineladaFederupaDraw:
 	jeq   ChineladaFederupaDraw_Skip
 
 	load  r1, posChineloFederupa
-	loadn r2, #'W'
-	loadn r3, #'X'
-	loadn r4, #'w'
-	loadn r5, #'x'
+	loadn r2, #'['
+	loadn r3, #']'
+	loadn r4, #'\'
+	loadn r5, #'^'
 
 	;       Desenha parte de cima
 	outchar r2, r1
