@@ -1,6 +1,4 @@
-	call StartGameScreen
-	call Tuturial
-	jmp  Main
+	jmp Main
 
 	; ================== Variáveis ===================
 
@@ -201,7 +199,7 @@ GameOverCaasoWin_ScanChar:
 	inchar r0; Lê uma tecla do teclado
 	loadn  r1, #'s'
 	cmp    r0, r1
-	jeq    StartGameScreen
+	jeq    Main
 
 	loadn r1, #'n'
 	cmp   r0, r1
@@ -226,7 +224,7 @@ GameOverFederalWin_ScanChar:
 	inchar r0; Lê uma tecla do teclado
 	loadn  r1, #'s'
 	cmp    r0, r1
-	jeq    StartGameScreen
+	jeq    Main
 
 	loadn r1, #'n'
 	cmp   r0, r1
@@ -371,7 +369,10 @@ MoveCaaso:
 	push r2
 	push r3
 
-	inchar r0
+	; Copia a entrada do teclado em r6
+	; para o r0
+
+	mov r0, r6
 
 	loadn r1, #'a'
 	cmp   r0, r1
@@ -688,7 +689,10 @@ MoveFederupa:
 	push r2
 	push r3
 
-	inchar r0
+	; Copia a entrada do teclado em r6
+	; para o r0
+
+	mov r0, r6
 
 	loadn r1, #'j'
 	cmp   r0, r1
@@ -955,6 +959,8 @@ IsCaasoHit:
 	load r1, posCaasoUp
 	cmp  r0, r1
 	ceq  DecLifeCaaso
+	cmp  r0, r1
+	jeq  IsCaasoHit_Skip
 
 	; =====================================
 	; Compara
@@ -966,6 +972,8 @@ IsCaasoHit:
 	inc r1; Posição da direita do CAASO
 	cmp r0, r1
 	ceq DecLifeCaaso
+	cmp r0, r1
+	jeq IsCaasoHit_Skip
 
 	; =====================================
 	; Compara
@@ -977,6 +985,8 @@ IsCaasoHit:
 	inc r0; Posição da direita do chinelo
 	cmp r0, r1
 	ceq DecLifeCaaso
+	cmp r0, r1
+	jeq IsCaasoHit_Skip
 
 	; =====================================
 	; Compara
@@ -989,6 +999,7 @@ IsCaasoHit:
 	cmp r0, r1
 	ceq DecLifeCaaso
 
+IsCaasoHit_Skip:
 	pop r1
 	pop r0
 	rts
@@ -1010,6 +1021,8 @@ IsFederupaHit:
 	load r1, posFederupaUp
 	cmp  r0, r1
 	ceq  DecLifeFederupa
+	cmp  r0, r1
+	jeq  IsFederupaHit_Skip
 
 	; =====================================
 	; Compara
@@ -1021,6 +1034,8 @@ IsFederupaHit:
 	inc r1; Posição da direita do federupa
 	cmp r0, r1
 	ceq DecLifeFederupa
+	cmp r0, r1
+	jeq IsFederupaHit_Skip
 
 	; =====================================
 	; Compara
@@ -1032,6 +1047,8 @@ IsFederupaHit:
 	inc r0; Posição da direita do chinelo
 	cmp r0, r1
 	ceq DecLifeFederupa
+	cmp r0, r1
+	jeq IsFederupaHit_Skip
 
 	; =====================================
 	; Compara
@@ -1044,6 +1061,7 @@ IsFederupaHit:
 	cmp r0, r1
 	ceq DecLifeFederupa
 
+IsFederupaHit_Skip:
 	pop r1
 	pop r0
 	rts
@@ -1117,16 +1135,30 @@ DecLifeFederupa:
 	rts
 
 Main:
-	call CleanScreen
 
 	; ===================================
 	; Setup inicial das variáveis do jogo
 	; ===================================
 
+	; Limpando lixo dos registradores
+
+	loadn r0, #0
+	loadn r1, #0
+	loadn r2, #0
+	loadn r3, #0
+	loadn r4, #0
+	loadn r5, #0
+	loadn r6, #0
+	loadn r7, #0
+
+	call CleanScreen
+	call StartGameScreen
+	call Tuturial
+
 	; Salva quantidades de vidas
 	; dos jogadores
 
-	loadn r0, #5
+	loadn r0, #3
 	store lifesCaaso, r0
 	store lifesFederupa, r0
 
@@ -1170,6 +1202,10 @@ Main:
 	loadn r2, #0; Salva valor 0 para futuras operações
 
 Main_loop:
+
+	;      Leitura da entrada do teclado
+	inchar r6
+
 	; ======================
 	; Movimentação do CAASO
 	; Num de estado: 10
@@ -1192,20 +1228,20 @@ Main_loop:
 
 	; ======================
 	; Movimentação do Federupa
-	; Num de estado: 30
+	; Num de estado: 10
 	; ======================
 
-	loadn r1, #30
+	loadn r1, #10
 	mod   r1, r0, r1
 	cmp   r1, r2
 	ceq   Federupa
 
 	; ======================
 	; Chinelada do Federupa
-	; Num de estado: 3
+	; Num de estado: 2
 	; ======================
 
-	loadn r1, #3
+	loadn r1, #2
 	mod   r1, r0, r1
 	cmp   r1, r2
 	ceq   ChineladaFederupa
