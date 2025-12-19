@@ -28,4 +28,5 @@ O simulador desse repositório funciona somente em linux, caso uso Windows ou pr
 
 5. Se Divirta ganhando da Federal na Chinelada!
 
-
+## Vídeo do Jogo Funcionando
+[Link](https://drive.google.com/file/d/11KRuyrzXy3BySztRwtXc8dF1Dl955WgV/view?usp=sharing) do jogo funcionando
