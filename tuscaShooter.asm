@@ -631,14 +631,6 @@ EraseCaasoChinelo:
 	inc     r1
 	outchar r0, r1
 
-	; Desenha Espaço vazio na
-	; posição do chinelo
-
-	; add     r1, r1, r3
-	; outchar r0, r1
-	; inc     r1
-	; outchar r0, r1
-
 EraseCaasoChinelo_Skip:
 	pop r3
 	pop r2
@@ -986,15 +978,6 @@ EraseFederupaChinelo:
 	outchar r0, r1
 	inc     r1
 	outchar r0, r1
-
-	; Desenha Espaço vazio na
-	; posição do chinelo
-
-	; loadn r3, #1040
-	; add     r1, r1, r3
-	; outchar r0, r1
-	; inc     r1
-	; outchar r0, r1
 
 EraseFederupaChinelo_Skip:
 	pop r3
