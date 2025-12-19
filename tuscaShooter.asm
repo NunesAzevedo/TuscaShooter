@@ -167,23 +167,26 @@ PrintHud:
 PrintValuesHud:
 	push r0
 	push r1
-	push r2
-	push r3
-	push r4
 
-	load  r0, lifesCaaso
-	loadn r1, #48; Fator de correção para tabela ASCII
-	add   r0, r0, r1
+	; Print das vidas do Caaso
 
-	loadn   r1, #1168; Posição da tela para o print
+	load    r0, lifesCaaso
+	loadn   r1, #48; Fator de correção para tabela ASC
+	add     r0, r0, r1
+	loadn   r1, #1168; Posição da tela da vida do Caaso
 	outchar r0, r1
 
-	; Print das vidas
+	; Print das vidas do Federupa
 
-	load r1
-	;    ########## FALTA TERMINAR PrintValuesHud ##########
+	load    r0, lifesFederupa
+	loadn   r1, #48; Fator e correção para tabela ASC
+	add     r0, r0, r1
+	loadn   r1, #1197; Posição das vidas da Federal
+	outchar r0, r1
 
-	; Printa tela de Fim de jogo
+	pop r1
+	pop r0
+	rts
 
 	; --------- Tela de Game Over quando o CAASO Vence ---------
 
