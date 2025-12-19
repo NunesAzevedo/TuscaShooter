@@ -871,6 +871,7 @@ ChineladaFederupaPassouUltimaLinha:
 	push r0
 	push r1
 	push r2
+	push r3
 
 	; Coloca o flag da Chinelada como 0
 
@@ -880,10 +881,21 @@ ChineladaFederupaPassouUltimaLinha:
 	loadn r1, #' '
 	load  r2, posChineloFederupa
 
+	;       Apaga parte de cima
 	outchar r1, r2
 	inc     r2
 	outchar r1, r2
 
+	;     Apaga parte de baixo
+	loadn r3, #40
+	dec   r2
+	add   r2, r2, r3
+
+	outchar r1, r2
+	inc     r2
+	outchar r1, r2
+
+	pop r3
 	pop r2
 	pop r1
 	pop r0
@@ -908,14 +920,14 @@ ChineladaFederupaDraw:
 	loadn r4, #'w'
 	loadn r5, #'x'
 
+	;       Desenha parte de cima
 	outchar r2, r1
-
 	inc     r1; Desloca a posição do tiro para a direita
 	outchar r3, r1
 
 	dec   r1; Desloca posição do chinelo para a esquerda novamente
 	loadn r6, #40
-	sub   r1, r1, r6; Desloca para baixo o chinelo
+	add   r1, r1, r6; Desloca para baixo o chinelo
 
 	outchar r4, r1
 
@@ -944,18 +956,33 @@ EraseFederupaChinelo:
 	; do chinelo é a mesma do jogador
 	; e se for, pula a função
 
-	load  r2, posFederupaUp
-	loadn r3, #1040
-	cmp   r1, r2
-	jeq   EraseFederupaChinelo_Skip
+	load r2, posFederupaUp
+	cmp  r1, r2
+	jeq  EraseFederupaChinelo_Skip
+
+	;       Apagar parte de cima do chinelo
+	outchar r0, r1
+	inc     r1
+	outchar r0, r1
+
+	;     Descer para a linha de baixo
+	loadn r3, #40
+	dec   r1
+	add   r1, r1, r3
+
+	;       Apaga a parte de baixo
+	outchar r0, r1
+	inc     r1
+	outchar r0, r1
 
 	; Desenha Espaço vazio na
 	; posição do chinelo
 
-	add     r1, r1, r3
-	outchar r0, r1
-	inc     r1
-	outchar r0, r1
+	; loadn r3, #1040
+	; add     r1, r1, r3
+	; outchar r0, r1
+	; inc     r1
+	; outchar r0, r1
 
 EraseFederupaChinelo_Skip:
 	pop r3
