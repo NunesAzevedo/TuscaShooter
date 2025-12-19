@@ -5,6 +5,8 @@ O jogo foi desenvolvido como trabalho da disciplina ```SSC0513 - Organização e
 
 O consiste de dois jogadores que tentam acertar o chinelo um no outro, e quem fizer o outro perder todas as suas vidas primeiro, vence.
 
+O link da pixelart dos players e do chinelo estão disponíveis nesse [link](https://drive.google.com/drive/folders/1zUH-aAw0q8wbZ-AFuA2VrWjWdNL8PVxL?usp=sharing)
+
 ## Como Jogar ?
 
 Para jogar será necessário clonar o repositório, ou simplemsnte baixar os arquivos:
