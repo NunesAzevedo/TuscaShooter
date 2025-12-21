@@ -3,7 +3,7 @@ Tusca Shooter é um jogo multijogador inspirado em OutLaw do Atari, adaptado ao 
 
 O jogo foi desenvolvido como trabalho da disciplina ```SSC0513 - Organização e Arquitetura de Computadores```, que consiste no desenvolvimento de um jogo em assembly no [Processador do ICMC - USP](https://github.com/simoesusp/Processador-ICMC).
 
-O consiste de dois jogadores que tentam acertar o chinelo um no outro, e quem fizer o outro perder todas as suas vidas primeiro, vence.
+O jogo consiste de dois jogadores que tentam acertar o chinelo um no outro, e quem fizer o outro perder todas as suas vidas primeiro, vence.
 
 O link da pixelart dos players e do chinelo estão disponíveis nesse [link](https://drive.google.com/drive/folders/1zUH-aAw0q8wbZ-AFuA2VrWjWdNL8PVxL?usp=sharing)
 
