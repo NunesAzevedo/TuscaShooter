@@ -17,8 +17,8 @@ Que contêm, respectivamente, o código-fonte do jogo, e o arquivo de caracteres
 
 Em seguida:
 
-1. Abra o simulador
-O simulador desse repositório funciona somente em linux, caso uso Windows ou prefira usar o simulador no navegador, no repositório do Processador-ICMC tem as IDE's para simular o jogo nesse [link](https://github.com/simoesusp/Processador-ICMC).
+1. Abra o simulador \
+O simulador desse repositório funciona somente em linux, caso use Windows ou prefira usar o simulador no navegador, no repositório do Processador-ICMC tem as IDE's para simular o jogo nesse [link](https://github.com/simoesusp/Processador-ICMC).
 
 2. Importe os arquivos ```tuscaShooter.asm``` e ```charmap.mif``` dentro do simulador.
 
